@@ -1,5 +1,6 @@
 import numpy as np
 
+from scipy.special import expit as activation_function
 from scipy.stats import truncnorm
 
 """ from https://www.python-course.eu/neural_networks_with_python_numpy.php """
@@ -28,5 +29,12 @@ class NeuralNetwork:
     def train(self):
         pass
     
-    def run(self):
-        pass
+    def run(self, input):
+        # format from horizontal matrix to vertical matrix
+        input = np.array(input, ndmin=2).T
+
+        for i in range(1, len(self.weights)):
+            output = np.dot(self.weights[i], input)
+            input = activation_function(output)
+
+        return input
